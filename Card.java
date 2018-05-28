@@ -1,7 +1,7 @@
 public class Card implements Comparable{
 
     Ranks rank;
-    String suit;
+    Suits suit;
 
     Card(String rank, String suit){
         this.rank = Ranks.valueOf(rank);

@@ -6,9 +6,7 @@ public class Card implements Comparable<Card> {
 
     Suits suit;
     Ranks rank;
-
     Card (Suits suit, Ranks rank){ //taking Enum-type args;
-        this.suit = suit;
         this.rank = rank;
     }
     

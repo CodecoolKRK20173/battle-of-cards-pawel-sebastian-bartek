@@ -20,11 +20,12 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card that) { //as far we compare only ranks(figury), not suit(kolory);
-        return this.rank.compareTo(that.rank);
+        return this.rank.compareTo(that.rank);   
     }
 
+
     //according to Horstmann if want to compare, define equals() and hashCode():
-    public boolean equals(Object thatObject){
+   public boolean equals(Object thatObject){
         if (this == thatObject) return true;
         if (thatObject == null) return false;
         if (getClass() != thatObject.getClass()) return false;
@@ -59,7 +60,16 @@ public class Card implements Comparable<Card> {
 
         Card ace = new Card("CLUBS", "ACE"); // testing constructor raking Strings
         Card king = new Card(Suits.DIAMONDS, Ranks.KING); //testing alt. constructor
+        //Integer.v(king) < Integer.valueOf(ace);
+        //"pies" < "kot";
+        System.out.println((int)'a' < (int)'b');
+        System.out.println('a' > 'b');
+        System.out.println(ace.compareTo(king));
+
+        System.out.println(Suits.HEARTS.ordinal());
+        System.out.println(ace.equals(king));
         
+    
     }
     
 }

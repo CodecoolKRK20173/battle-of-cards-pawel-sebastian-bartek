@@ -1,73 +1,73 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.lang.*;
+public class Card implements ArbitraryComparable<Card> {
 
-public class Card implements Comparable<Card> {
+    private String name;
+    private int parametr1;
+    private int parametr2;
+    private int parametr3;
 
-    Suits suit;
-    Ranks rank;
-    Card (Suits suit, Ranks rank){ //taking Enum-type args;
-        this.rank = rank;
-    }
-    
-    //alternative constructor, taking string args;
-    Card(String suit, String rank){
-        this.rank = Ranks.valueOf(rank);
-        this.suit = Suits.valueOf(suit);
+
+    public Card(String n, int p1, int p2) {
+        this.name = n;
+        this.parametr1 = p1;
+        this.parametr2 = p2;
+        this.parametr3 = p1 * p2;
     }
 
-    @Override
-    public int compareTo(Card that) { //as far we compare only ranks(figury), not suit(kolory);
-        return this.rank.compareTo(that.rank);   
+    public String getName() {
+        return name;
     }
 
-
-    //according to Horstmann if want to compare, define equals() and hashCode():
-   public boolean equals(Object thatObject){
-        if (this == thatObject) return true;
-        if (thatObject == null) return false;
-        if (getClass() != thatObject.getClass()) return false;
-        Card that = (Card) thatObject;
-        return Objects.equals(this.rank, that.rank) && Objects.equals(this.suit, that.suit);
+    public int getParametr1() {
+        return parametr1;
     }
 
-    public int hashCode(){ 
-        return Objects.hash(rank, suit); 
-    }
-    
-    public String toString(){ //returns: (ex) QUEEN of ♠
-        return String.format("%s of %s", rank, suit.getRepresentation());
+    public int getParametr2() {
+        return parametr2;
     }
 
-    //not belongs to class, just for testing class:
-    public static void main(String[] args) {
-        //Look how enums works:
-        for(Suits suit: Suits.values()) 
-            System.out.println(suit.getRepresentation());
-        
-        //something like deck:
-        List<Card> deck = new ArrayList<>();
+    public int getParametr3() {
+        return parametr3;
+    }
 
-        //somethinh like deck constructor:
-        for(Suits suit: Suits.values()) {
-            for(Ranks rank: Ranks.values()) deck.add(new Card(suit, rank));
+    public int compareAccordingTo(Card that, int option){
+        switch(option){
+            case 1:
+            return compare(this.parametr1, that.parametr1);
+
+            case 2:
+            return compare(this.parametr2, that.parametr2);
+            
+            default:
+            return compare(this.parametr3,that.parametr3);
         }
-
-        //printing deck :)
-        for(Card aCard: deck) System.out.println(aCard);
-
-        Card ace = new Card("CLUBS", "ACE"); // testing constructor raking Strings
-        Card king = new Card(Suits.DIAMONDS, Ranks.KING); //testing alt. constructor
-        //Integer.v(king) < Integer.valueOf(ace);
-        //"pies" < "kot";
-        System.out.println((int)'a' < (int)'b');
-        System.out.println('a' > 'b');
-        System.out.println(ace.compareTo(king));
-
-        System.out.println(Suits.HEARTS.ordinal());
-        System.out.println(ace.equals(king));
-        
-    
     }
-    
+
+    private static int compare (int a, int b){
+        if (a>b) return 1;
+        if (a<b) return -1;
+        else return 0;
+    }
+
+    public String toString() {
+        String card = "";
+        card = card + "_________________\n";
+        card = card + "|    " + name + "     |\n";
+        card = card + "|               |\n";
+        card = card + "";
+        return card;
+    }
+
+    //for tests only:
+    public static void main(String[] args) {
+        Card ford = new Card("Ford", 100, 400);
+        Card opel = new Card("Opel", 80,450);
+
+        System.out.println(ford);
+        opel.compareAccordingTo(ford, 1);
+        opel.compareAccordingTo(ford, 2);
+        opel.compareAccordingTo(ford, 0);
+        
+    }
+
 }

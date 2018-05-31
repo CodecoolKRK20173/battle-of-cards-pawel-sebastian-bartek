@@ -38,24 +38,61 @@ public class Game {
         }
     }
 
+    public boolean isGameOver() {
+        for (int i = 0; i < table.getPlayers().length; i++) {
+            if (table.getPlayers()[i].getPile().getMyCards().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void showWinners() {
+        ArrayList<Integer> numberOfCardsInPiles = new ArrayList<Integer>();
+        ArrayList<Player> winners = new ArrayList<Player>();
+        for (int i = 0; i < table.getPlayers().length; i++) {
+            numberOfCardsInPiles.add(table.getPlayers()[i].getPile().getMyCards().size());
+        }
+        int maxCards = Collections.max(numberOfCardsInPiles);
+
+        for (int i = 0; i < table.getPlayers().length; i++) {
+            if (table.getPlayers()[i].getPile().getMyCards().size() == maxCards)
+                winners.add(table.getPlayers()[i]);
+        }
+        System.out.println("And the winner is...");
+        for (Player winner: winners)
+            System.out.println(winner.getName());
+    }
+
     public void startGame() {
-        boolean isRunning = true;
         int numberOfPlayers = getNumberOfPlayers();
         this.table = new Table(numberOfPlayers);
-        int firstPlayer = (int)(Math.random() * numberOfPlayers);
-        int parameterToCompare = table.getPlayers()[firstPlayer].getParameterToCompare();
+        int nextPlayer = (int)(Math.random() * numberOfPlayers);
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-            table.getPlayers()[i].showTopCard();
+        while (!isGameOver()) {
+            for (int i = 0; i < table.getPlayers().length; i++)
+                System.out.println(table.getPlayers()[i].getPile().getMyCards().size());
+            table.getPlayers()[nextPlayer].showTopCard();
+            int parameterToCompare = table.getPlayers()[nextPlayer].getParameterToCompare();
+            table.showPlayersCards();
+            table.getCardsFromPlayers(numberOfPlayers, parameterToCompare);
+            Common.pressAnyKey();
+            int indexOfHighestCard = table.getIndexOfWinningCard(parameterToCompare);
+            if (table.isWar(parameterToCompare)) {
+                int highestCardValue = table.getHighestParamaterValue();
+                table.moveAllCardsToCardsToBeCollected();
+                ArrayList<Integer> playersOnWar = table.getIndexesOfPlayersOnWar(highestCardValue);
+            }
+            else {
+                table.moveAllCardsToCardsToBeCollected();
+                table.getPlayers()[indexOfHighestCard].addCardsToPile(table.getCardsToBeCollected());
+                table.clearTable();
+                nextPlayer = indexOfHighestCard;
+
+            }
         }
+        showWinners();
 
-        table.getCardsFromPlayers(numberOfPlayers, parameterToCompare);
-
-
-
-        int indexOfTaker = table.getIndexOfWinningCard(parameterToCompare);
-        System.out.println(table.getCardsOnTable()[indexOfTaker]);
-        System.out.println(table.isWar(indexOfTaker, parameterToCompare).toString());
 
     }
 }

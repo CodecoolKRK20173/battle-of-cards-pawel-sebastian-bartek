@@ -4,6 +4,7 @@ public class Table {
     private Player[] players;
     private Card[] cardsOnTable;
     private int[] listOfComparedParameters;
+    private ArrayList<Card> cardsToBeCollected = new ArrayList<Card>();
 
     Table(int numberOfPlayers) {
         this.players = new Player[numberOfPlayers];
@@ -46,17 +47,15 @@ public class Table {
         return cardIndex;
     }
 
-    public HashSet<Integer> isWar(int indexOfHighestCard, int parameterToCompare) {
-        HashSet<Integer> indexesOfPlayersOnWar = new HashSet<Integer>();
-        int highestValue = cardsOnTable[indexOfHighestCard].getParameter(parameterToCompare);
+    public boolean isWar(int parameterToCompare) {
         int[] copyOfComparedParameters = Arrays.copyOf(listOfComparedParameters, listOfComparedParameters.length);
         Arrays.sort(copyOfComparedParameters);
         if(copyOfComparedParameters[copyOfComparedParameters.length-1] != copyOfComparedParameters[copyOfComparedParameters.length-2]){
-            indexesOfPlayersOnWar.add(indexOfHighestCard);
+            return false;
         }
-        System.out.println(Arrays.toString(copyOfComparedParameters));
-        return indexesOfPlayersOnWar;
-
+        else {
+            return true;
+        }
     }
 
     public Player[] getPlayers() {
@@ -65,5 +64,48 @@ public class Table {
 
     public Card[] getCardsOnTable() {
         return cardsOnTable;
+    }
+
+    public ArrayList<Card> getCardsToBeCollected() {
+        return cardsToBeCollected;
+    }
+
+    public int getHighestParamaterValue() {
+        int[] copyOfComparedParameters = Arrays.copyOf(listOfComparedParameters, listOfComparedParameters.length);
+        Arrays.sort(copyOfComparedParameters);
+        int highestParameter = copyOfComparedParameters[copyOfComparedParameters.length-1];
+        return highestParameter;
+    }
+
+    public ArrayList<Integer> getIndexesOfPlayersOnWar(int highestParameter) {
+        ArrayList<Integer> indexesOfPlayersOnWar = new ArrayList<Integer>();
+        for(int i = 0; i < listOfComparedParameters.length; i++) {
+            if (listOfComparedParameters[i] == highestParameter)
+                indexesOfPlayersOnWar.add(i);
+        }
+        return indexesOfPlayersOnWar;
+    }
+
+    public void moveCardsOnWarToCardsToBeCollected(int highestParameter) {
+        for (int index : getIndexesOfPlayersOnWar(highestParameter)) {
+            cardsToBeCollected.add(cardsOnTable[index]);
+        }
+    }
+
+    public void moveAllCardsToCardsToBeCollected() {
+        for (int i = 0; i < players.length; i++) {
+            cardsToBeCollected.add(cardsOnTable[i]);
+        }
+    }
+
+    public void clearTable() {
+        cardsToBeCollected.clear();
+    }
+
+    public void showPlayersCards() {
+        for (int i = 0; i < players.length; i++) {
+            players[i].showTopCard();
+            Common.sleep(500);
+        }
     }
 }

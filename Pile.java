@@ -5,7 +5,7 @@ public class Pile {
     private static final Deck deck = new Deck();
     private static final int numberOfCards = deck.getCards().size();
 
-    Pile(int numberOfPlayers, int startingPoint) {
+    Pile (int numberOfPlayers, int startingPoint) {
         for (int i = startingPoint; i < numberOfCards; i += numberOfPlayers) {
             if (i <= numberOfCards) {
                 myCards.add(deck.getCards().get(i));
@@ -13,7 +13,7 @@ public class Pile {
         }
     }
 
-    public ArrayList<Card> getPile() {
+    public ArrayList<Card> getMyCards() {
         return myCards;
     }
 }

@@ -53,6 +53,7 @@ public class Table {
         Arrays.sort(copyOfComparedParameters);
         if(copyOfComparedParameters[copyOfComparedParameters.length-1] != copyOfComparedParameters[copyOfComparedParameters.length-2]){
             indexesOfPlayersOnWar.add(indexOfHighestCard);
+            return indexesOfPlayersOnWar;
         }
         System.out.println(Arrays.toString(copyOfComparedParameters));
         return indexesOfPlayersOnWar;

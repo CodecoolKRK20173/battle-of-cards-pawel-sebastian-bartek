@@ -1,19 +1,25 @@
 import java.util.*;
 
 public class Pile {
+    private static final Deck deck = new Deck(); // czy final zależo, czy pozbywamy się kart rozdając;
+    private static final int numberOfCards = deck.size(); //może być final
     private ArrayList<Card> myCards = new ArrayList<Card>();
-    private static final Deck deck = new Deck();
-    private static final int numberOfCards = deck.getCards().size();
+    
 
-    public Pile(int numberOfPlayers, int startingPoint) {
-        for (int i = startingPoint; i < numberOfCards; i += numberOfPlayers) {
-            if (i <= numberOfCards) {
-                myCards.add(deck.getCards().get(i));
-            }
-        }
+    
+    Pile(){
+        myCards = null;
     }
-
+        
     public ArrayList<Card> getPile() {
         return myCards;
+    }
+
+    public void add(Card card){
+        myCards.add(card);
+    }
+
+    public static void main(String[] args) {
+        // jak się deck rozdaje na paile
     }
 }

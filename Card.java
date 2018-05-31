@@ -1,4 +1,5 @@
 import java.lang.*;
+
 public class Card implements ArbitraryComparable<Card> {
 
     private String name;
@@ -7,7 +8,7 @@ public class Card implements ArbitraryComparable<Card> {
     private int parameter3;
 
 
-    public Card(String n, int p1, int p2) {
+    Card(String n, int p1, int p2) {
         this.name = n;
         this.parameter1 = p1;
         this.parameter2 = p2;
@@ -62,16 +63,31 @@ public class Card implements ArbitraryComparable<Card> {
         else return 0;
     }
 
+    public String center(String s) {
+        int width = 24;
+        int padSize = width - s.length();
+        int padStart = s.length() + padSize / 2;
+        s = String.format("%" + padStart + "s", s);
+        s = String.format("%-" + width  + "s", s);
+        return s;
+    }
+
     public String toString() {
-        String card = "";
-        card = card + "_________________\n";
-        card = card + "|    " + name + "     |\n";
-        card = card + "|               |\n";
-        card = card + "|(1) " + parameter1 + "     |\n";
-        card = card + "|               |\n";
-        card = card + "|(2) " + parameter2 + "     |\n";
-        card = card + "|               |\n";
-        card = card + "|(3) " + parameter3 + "     |\n\n";
+        StringBuilder builder = new StringBuilder();
+        String line = new String(new char[26]).replace('\0', '-');
+
+        builder.append(center(line) + "\n");
+        builder.append("|" + center(name) + "|" + "\n");
+        builder.append(center(line + "\n"));
+        builder.append("|" + center("parameter 1: " + String.format("%3s", Integer.toString(parameter1))) + "|" + "\n");
+        builder.append(center(line + "\n"));
+        builder.append("|" + center("parameter 2: " + String.format("%3s", Integer.toString(parameter2))) + "|" + "\n");
+        builder.append(center(line + "\n"));
+        builder.append("|" + center("parameter 3: " + String.format("%3s", Integer.toString(parameter3))) + "|" + "\n");
+        builder.append(center(line));
+
+        String card = builder.toString();
+
         return card;
     }
 

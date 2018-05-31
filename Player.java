@@ -3,8 +3,8 @@ import java.util.*;
 class Player {
     private Pile myPile;
     private String name;
-    
-    public Player(String name, int numberOfPlayers, int startingPoint) {
+
+    Player(String name, int numberOfPlayers, int startingPoint) {
         this.myPile = new Pile(numberOfPlayers, startingPoint);
         this.name = name;
     }

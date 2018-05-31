@@ -5,7 +5,7 @@ public class Table {
     private Card[] cardsOnTable;
     private ArrayList<Integer> listOfComparedParameters = new ArrayList<Integer>();
 
-    public Table(int numberOfPlayers) {
+    Table(int numberOfPlayers) {
         this.players = new Player[numberOfPlayers];
         this.cardsOnTable = new Card[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {

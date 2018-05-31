@@ -3,11 +3,12 @@ import java.util.*;
 public class Table {
     private Player[] players;
     private Card[] cardsOnTable;
-    private ArrayList<Integer> listOfComparedParameters = new ArrayList<Integer>();
+    private int[] listOfComparedParameters;
 
     public Table(int numberOfPlayers) {
         this.players = new Player[numberOfPlayers];
         this.cardsOnTable = new Card[numberOfPlayers];
+        this.listOfComparedParameters = new int[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
             int playerNumber = i + 1;
             String name = getPlayerName(playerNumber);
@@ -27,7 +28,8 @@ public class Table {
     public void getCardsFromPlayers(int numberOfPlayers, int parameterToCompare) {
         for (int i = 0; i < numberOfPlayers; i++) {
             cardsOnTable[i] = players[i].getTopCard();
-            listOfComparedParameters.add(players[i].getTopCard().getParameter(parameterToCompare));
+            Card card = cardsOnTable[i];
+            listOfComparedParameters[i] = card.getParameter(parameterToCompare);
         }
     }
 
@@ -44,8 +46,17 @@ public class Table {
         return cardIndex;
     }
 
-    public void clearListOfComparedParameters() {
-        listOfComparedParameters.clear();
+    public HashSet<Integer> isWar(int indexOfHighestCard, int parameterToCompare) {
+        HashSet<Integer> indexesOfPlayersOnWar = new HashSet<Integer>();
+        int highestValue = cardsOnTable[indexOfHighestCard].getParameter(parameterToCompare);
+        int[] copyOfComparedParameters = Arrays.copyOf(listOfComparedParameters, listOfComparedParameters.length);
+        Arrays.sort(copyOfComparedParameters);
+        if(copyOfComparedParameters[copyOfComparedParameters.length-1] != copyOfComparedParameters[copyOfComparedParameters.length-2]){
+            indexesOfPlayersOnWar.add(indexOfHighestCard);
+        }
+        System.out.println(Arrays.toString(copyOfComparedParameters));
+        return indexesOfPlayersOnWar;
+
     }
 
     public Player[] getPlayers() {

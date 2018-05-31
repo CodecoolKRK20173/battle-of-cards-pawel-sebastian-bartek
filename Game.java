@@ -55,6 +55,7 @@ public class Game {
 
         int indexOfTaker = table.getIndexOfWinningCard(parameterToCompare);
         System.out.println(table.getCardsOnTable()[indexOfTaker]);
+        System.out.println(table.isWar(indexOfTaker, parameterToCompare).toString());
 
     }
 }

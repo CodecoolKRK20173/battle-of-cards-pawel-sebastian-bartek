@@ -1,16 +1,16 @@
 import java.lang.*;
 
-public class Card implements ArbitraryComparable<Card> {
+public class Card {
     private String name;
-    private int parameter1;
-    private int parameter2;
-    private int parameter3;
+    private int speed;
+    private int mass;
+    private int momentum;
 
     Card(String n, int p1, int p2) {
         this.name = n;
-        this.parameter1 = p1;
-        this.parameter2 = p2;
-        this.parameter3 = p1 * p2;
+        this.speed = p1;
+        this.mass = p2;
+        this.momentum = p1 * p2;
     }
 
     public String getName() {
@@ -18,15 +18,15 @@ public class Card implements ArbitraryComparable<Card> {
     }
 
     public int getParameter1() {
-        return parameter1;
+        return speed;
     }
 
     public int getParameter2() {
-        return parameter2;
+        return mass;
     }
 
     public int getParameter3() {
-        return parameter3;
+        return momentum;
     }
 
     public int getParameter(int parametrNumber) {
@@ -40,23 +40,6 @@ public class Card implements ArbitraryComparable<Card> {
             default:
             return getParameter3();
         }
-    }
-
-    public int compareAccordingTo(Card that, int option) {
-        switch(option){
-            case 1:
-            return compare(this.parameter1, that.parameter1);
-            case 2:
-            return compare(this.parameter2, that.parameter2);
-            default:
-            return compare(this.parameter3,that.parameter3);
-        }
-    }
-
-    private static int compare (int a, int b){
-        if (a>b) return 1;
-        if (a<b) return -1;
-        else return 0;
     }
 
     public String center(String s) {
@@ -75,28 +58,15 @@ public class Card implements ArbitraryComparable<Card> {
         builder.append(center(line) + "\n");
         builder.append("|" + center(name) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("(1) speed: " + String.format("%3s", Integer.toString(parameter1))) + "|" + "\n");
+        builder.append("|" + center("(1) speed: " + String.format("%3s", Integer.toString(speed))) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("(2) mass: " + String.format("%3s", Integer.toString(parameter2))) + "|" + "\n");
+        builder.append("|" + center("(2) mass: " + String.format("%3s", Integer.toString(mass))) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("(3) momentum: " + String.format("%3s", Integer.toString(parameter3))) + "|" + "\n");
+        builder.append("|" + center("(3) momentum: " + String.format("%3s", Integer.toString(momentum))) + "|" + "\n");
         builder.append(center(line));
 
         String card = builder.toString();
 
         return card;
     }
-
-    //for tests only:
-    public static void main(String[] args) {
-        Card ford = new Card("Ford", 100, 400);
-        Card opel = new Card("Opel", 80,450);
-
-        System.out.println(ford);
-        opel.compareAccordingTo(ford, 1);
-        opel.compareAccordingTo(ford, 2);
-        opel.compareAccordingTo(ford, 0);
-
-    }
-
 }

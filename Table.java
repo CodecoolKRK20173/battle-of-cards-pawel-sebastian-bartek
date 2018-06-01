@@ -24,13 +24,33 @@ public class Table {
         name = reader.next();
         return name;
     }
-
-    public void getCardsFromPlayers(int numberOfPlayers, int parameterToCompare) {
-        for (int i = 0; i < numberOfPlayers; i++) {
-            cardsOnTable[i] = players[i].getTopCard();
-            Card card = cardsOnTable[i];
-            listOfComparedParameters[i] = card.getParameter(parameterToCompare);
+    public ArrayList<Integer> getIndexesOfPlayersInGame(int numberOfPlayers) {
+        ArrayList<Integer> playersInGame = new ArrayList<Integer>();
+        for(int i = 0; i < numberOfPlayers; i++){
+            playersInGame.add(i);
         }
+        return playersInGame;
+    }
+
+    public void getCardsFromPlayers(ArrayList<Integer> indexes, int parameterToCompare) {
+        for (int i = 0; i < players.length; i++) {
+            if(this.isIndex(i, indexes)) {
+                cardsOnTable[i] = players[i].getTopCard();
+                Card card = cardsOnTable[i];
+                listOfComparedParameters[i] = card.getParameter(parameterToCompare);
+            }
+            else {
+                listOfComparedParameters[i] = 0;
+            }
+        }
+    }
+    public boolean isIndex(int index, ArrayList<Integer> indexes) {
+        for(int number: indexes) {
+            if(index == number) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getIndexOfWinningCard(int parameterToCompare) {
@@ -91,18 +111,70 @@ public class Table {
         }
     }
 
-    public void moveAllCardsToCardsToBeCollected() {
-        cardsToBeCollected = new ArrayList<Card>(Arrays.asList(cardsOnTable));
+    public void moveAllCardsToCardsToBeCollected(ArrayList<Integer> indexes) {
+        for (int index: indexes) {
+            cardsToBeCollected.add(cardsOnTable[index]);
+        }
+
     }
 
     public void clearTable() {
         cardsToBeCollected.clear();
     }
 
-    public void showPlayersCards() {
-        for (int i = 0; i < players.length; i++) {
-            players[i].showTopCard();
+    public void showPlayersCards(ArrayList<Integer> indexes) {
+        for (int index: indexes) {
+            players[index].showTopCard();
             Common.sleep(500);
         }
+    }
+
+    public void showPlayersOnWar(ArrayList<Integer> indexes) {
+        System.out.println("Players on war:");
+        for (int index: indexes) {
+            System.out.println(players[index].getName());
+        }
+    }
+    public void showCards(ArrayList<Integer> indexes){
+        StringBuilder builder = new StringBuilder();
+        String line = new String(new char[26]).replace('\0', '-');
+
+        for(int i = 0; i < 10; i++){
+            for(int index: indexes){
+                Card card = cardsOnTable[index];
+                if(i == 0){
+                    builder.append(card.center(players[index].getName()) + " ");
+                }
+                else if(i == 1){
+                    builder.append(card.center(line) + " ");
+                }
+                else if(i == 2){
+                    builder.append("|" + card.center(card.getName()) + "|" + " ");
+                }
+                else if(i == 3){
+                    builder.append(card.center(line) + " ");
+                }
+                else if(i == 4){
+                    builder.append("|" + card.center("1) Speed:  " + String.format("%3s", Integer.toString(card.getParameter1()))) + "|" + " ");
+                }
+                else if(i == 5){
+                    builder.append(card.center(line) + " ");
+                }
+                else if(i == 6){
+                    builder.append("|" + card.center("2) Mass: " + String.format("%3s", Integer.toString(card.getParameter2()))) + "|" + " ");
+                }
+                else if(i == 7){
+                    builder.append(card.center(line) + " ");
+                }
+                else if(i == 8){
+                    builder.append("|" + card.center("3) Momentum:    " + String.format("%3s", Integer.toString(card.getParameter3()))) + "|" + " ");
+                }
+                else if(i == 9){
+                    builder.append(card.center(line) + " ");
+                }
+            }
+            builder.append("\n");
+        }
+        System.out.println(builder.toString());
     }
 }

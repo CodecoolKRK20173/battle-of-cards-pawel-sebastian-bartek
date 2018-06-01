@@ -42,4 +42,8 @@ class Player {
     public Pile getPile() {
         return this.myPile;
     }
+
+    public Card getCard(int index){
+        return this.myPile.getMyCards().get(index);
+    }
 }

@@ -46,6 +46,13 @@ public class Game {
         }
         return false;
     }
+    public void showPoints(){
+        System.out.println("--------------------------");
+        for (int i = 0; i < table.getPlayers().length; i++)
+            System.out.println(table.getPlayers()[i].getName() + " has " +
+            table.getPlayers()[i].getPile().getMyCards().size() + " cards\n");
+        System.out.println("--------------------------");
+    }
 
     public void showWinners() {
         ArrayList<Integer> numberOfCardsInPiles = new ArrayList<Integer>();
@@ -64,47 +71,33 @@ public class Game {
             System.out.println(winner.getName() + " (" + winner.getNumberOfCards() + ")");
     }
 
-    public void warHandler(int parameterToCompare) {
-        while (table.isWar(parameterToCompare)) {
-            System.out.println("So it's war!");
-            table.moveAllCardsToCardsToBeCollected();
-            int highestCardValue = table.getHighestParamaterValue();
-            ArrayList<Integer> playersOnWar = table.getIndexesOfPlayersOnWar(highestCardValue);
-            int numberOfPlayersOnWar = playersOnWar.size();
-            int nextPlayer = (int)(Math.random() * numberOfPlayersOnWar);
-            table.getPlayers()[nextPlayer].showTopCard();
-            parameterToCompare = table.getPlayers()[nextPlayer].getParameterToCompare();
-            for (int i = 0; i < playersOnWar.size(); i++) {
-                if (playersOnWar.contains(i)) {
-                    table.getPlayers()[i].showTopCard();
-                    Common.sleep(500);
-                }
-            }
-        }
-    }
-
     public void startGame() {
         int numberOfPlayers = getNumberOfPlayers();
         this.table = new Table(numberOfPlayers);
         int nextPlayer = (int)(Math.random() * numberOfPlayers);
+        ArrayList<Integer> playersInGame = table.getIndexesOfPlayersInGame(numberOfPlayers);
 
         while (!isGameOver()) {
-            for (int i = 0; i < table.getPlayers().length; i++)
-                System.out.println(table.getPlayers()[i].getNumberOfCards());
+            this.showPoints();
             table.getPlayers()[nextPlayer].showTopCard();
             int parameterToCompare = table.getPlayers()[nextPlayer].getParameterToCompare();
-            table.showPlayersCards();
-            table.getCardsFromPlayers(numberOfPlayers, parameterToCompare);
+            table.getCardsFromPlayers(playersInGame, parameterToCompare);
+            table.showCards(playersInGame);
             Common.pressAnyKey();
             int indexOfHighestCard = table.getIndexOfWinningCard(parameterToCompare);
+            table.moveAllCardsToCardsToBeCollected(playersInGame);
             if (table.isWar(parameterToCompare)) {
-                warHandler(parameterToCompare);
+                int highestCardValue = table.getHighestParamaterValue();
+                playersInGame = table.getIndexesOfPlayersOnWar(highestCardValue);
+                table.showPlayersOnWar(playersInGame);
+                nextPlayer = indexOfHighestCard;
+                Common.pressAnyKey();
             }
             else {
-                table.moveAllCardsToCardsToBeCollected();
                 table.getPlayers()[indexOfHighestCard].addCardsToPile(table.getCardsToBeCollected());
                 table.clearTable();
                 nextPlayer = indexOfHighestCard;
+                playersInGame = table.getIndexesOfPlayersInGame(numberOfPlayers);
 
             }
         }

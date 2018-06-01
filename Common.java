@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Common {
     public static int getChoice(int min, int max, boolean showMenu) {
@@ -28,4 +29,22 @@ public class Common {
         }
         return option;
     }
+
+    public static void sleep(int milliseconds) {
+        try {
+          TimeUnit.MILLISECONDS.sleep(milliseconds);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void pressAnyKey() {
+        System.out.println("Press Enter key to continue...");
+        try {
+            System.in.read();
+        }
+        catch(Exception e) {}
+    }
+
 }

@@ -58,9 +58,9 @@ public class Card {
         builder.append(center(line) + "\n");
         builder.append("|" + center(name) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("(1) speed: " + String.format("%3s", Integer.toString(speed))) + "|" + "\n");
+        builder.append("|" + center("(1) speed:    " + String.format("%3s", Integer.toString(speed))) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("(2) mass: " + String.format("%3s", Integer.toString(mass))) + "|" + "\n");
+        builder.append("|" + center("(2) mass:     " + String.format("%3s", Integer.toString(mass))) + "|" + "\n");
         builder.append(center(line + "\n"));
         builder.append("|" + center("(3) momentum: " + String.format("%3s", Integer.toString(momentum))) + "|" + "\n");
         builder.append(center(line));

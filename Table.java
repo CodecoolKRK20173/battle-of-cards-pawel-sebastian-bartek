@@ -155,13 +155,13 @@ public class Table {
                     builder.append(card.center(line) + " ");
                 }
                 else if(i == 4){
-                    builder.append("|" + card.center("1) Speed:  " + String.format("%3s", Integer.toString(card.getParameter1()))) + "|" + " ");
+                    builder.append("|" + card.center("1) Speed:       " + String.format("%3s", Integer.toString(card.getParameter1()))) + "|" + " ");
                 }
                 else if(i == 5){
                     builder.append(card.center(line) + " ");
                 }
                 else if(i == 6){
-                    builder.append("|" + card.center("2) Mass: " + String.format("%3s", Integer.toString(card.getParameter2()))) + "|" + " ");
+                    builder.append("|" + card.center("2) Mass:        " + String.format("%3s", Integer.toString(card.getParameter2()))) + "|" + " ");
                 }
                 else if(i == 7){
                     builder.append(card.center(line) + " ");

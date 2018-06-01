@@ -21,6 +21,10 @@ class Player {
         return topCard;
     }
 
+    public int getNumberOfCards() {
+        return myPile.getMyCards().size();
+    }
+
     public int getParameterToCompare() {
         System.out.print("Choose the parameter to compare: ");
         int parameterToCompare = Common.getChoice(1, 3, false);

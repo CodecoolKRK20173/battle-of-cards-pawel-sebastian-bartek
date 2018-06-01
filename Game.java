@@ -61,7 +61,26 @@ public class Game {
         }
         System.out.println("And the winner is...");
         for (Player winner: winners)
-            System.out.println(winner.getName());
+            System.out.println(winner.getName() + " (" + winner.getNumberOfCards() + ")");
+    }
+
+    public void warHandler(int parameterToCompare) {
+        while (table.isWar(parameterToCompare)) {
+            System.out.println("So it's war!");
+            table.moveAllCardsToCardsToBeCollected();
+            int highestCardValue = table.getHighestParamaterValue();
+            ArrayList<Integer> playersOnWar = table.getIndexesOfPlayersOnWar(highestCardValue);
+            int numberOfPlayersOnWar = playersOnWar.size();
+            int nextPlayer = (int)(Math.random() * numberOfPlayersOnWar);
+            table.getPlayers()[nextPlayer].showTopCard();
+            parameterToCompare = table.getPlayers()[nextPlayer].getParameterToCompare();
+            for (int i = 0; i < playersOnWar.size(); i++) {
+                if (playersOnWar.contains(i)) {
+                    table.getPlayers()[i].showTopCard();
+                    Common.sleep(500);
+                }
+            }
+        }
     }
 
     public void startGame() {
@@ -71,7 +90,7 @@ public class Game {
 
         while (!isGameOver()) {
             for (int i = 0; i < table.getPlayers().length; i++)
-                System.out.println(table.getPlayers()[i].getPile().getMyCards().size());
+                System.out.println(table.getPlayers()[i].getNumberOfCards());
             table.getPlayers()[nextPlayer].showTopCard();
             int parameterToCompare = table.getPlayers()[nextPlayer].getParameterToCompare();
             table.showPlayersCards();
@@ -79,9 +98,7 @@ public class Game {
             Common.pressAnyKey();
             int indexOfHighestCard = table.getIndexOfWinningCard(parameterToCompare);
             if (table.isWar(parameterToCompare)) {
-                int highestCardValue = table.getHighestParamaterValue();
-                table.moveAllCardsToCardsToBeCollected();
-                ArrayList<Integer> playersOnWar = table.getIndexesOfPlayersOnWar(highestCardValue);
+                warHandler(parameterToCompare);
             }
             else {
                 table.moveAllCardsToCardsToBeCollected();
@@ -92,7 +109,5 @@ public class Game {
             }
         }
         showWinners();
-
-
     }
 }

@@ -1,12 +1,10 @@
 import java.lang.*;
 
 public class Card implements ArbitraryComparable<Card> {
-
     private String name;
     private int parameter1;
     private int parameter2;
     private int parameter3;
-
 
     Card(String n, int p1, int p2) {
         this.name = n;
@@ -44,14 +42,12 @@ public class Card implements ArbitraryComparable<Card> {
         }
     }
 
-    public int compareAccordingTo(Card that, int option){
+    public int compareAccordingTo(Card that, int option) {
         switch(option){
             case 1:
             return compare(this.parameter1, that.parameter1);
-
             case 2:
             return compare(this.parameter2, that.parameter2);
-
             default:
             return compare(this.parameter3,that.parameter3);
         }
@@ -79,11 +75,11 @@ public class Card implements ArbitraryComparable<Card> {
         builder.append(center(line) + "\n");
         builder.append("|" + center(name) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("parameter 1: " + String.format("%3s", Integer.toString(parameter1))) + "|" + "\n");
+        builder.append("|" + center("(1) speed: " + String.format("%3s", Integer.toString(parameter1))) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("parameter 2: " + String.format("%3s", Integer.toString(parameter2))) + "|" + "\n");
+        builder.append("|" + center("(2) mass: " + String.format("%3s", Integer.toString(parameter2))) + "|" + "\n");
         builder.append(center(line + "\n"));
-        builder.append("|" + center("parameter 3: " + String.format("%3s", Integer.toString(parameter3))) + "|" + "\n");
+        builder.append("|" + center("(3) momentum: " + String.format("%3s", Integer.toString(parameter3))) + "|" + "\n");
         builder.append(center(line));
 
         String card = builder.toString();

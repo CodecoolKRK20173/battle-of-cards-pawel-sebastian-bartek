@@ -14,7 +14,6 @@ public class Table {
             int playerNumber = i + 1;
             String name = getPlayerName(playerNumber);
             players[i] = new Player(name, numberOfPlayers, i);
-
         }
     }
 
@@ -93,9 +92,7 @@ public class Table {
     }
 
     public void moveAllCardsToCardsToBeCollected() {
-        for (int i = 0; i < players.length; i++) {
-            cardsToBeCollected.add(cardsOnTable[i]);
-        }
+        cardsToBeCollected = new ArrayList<Card>(Arrays.asList(cardsOnTable));
     }
 
     public void clearTable() {
